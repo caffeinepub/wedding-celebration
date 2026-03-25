@@ -250,13 +250,172 @@ function CountdownUnit({ value, label }: { value: number; label: string }) {
         className="w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 rounded-none border border-border flex items-center justify-center shadow-xs"
         style={{ background: "oklch(0.972 0.008 84)" }}
       >
-        <span className="font-serif text-2xl sm:text-3xl md:text-4xl text-foreground font-semibold">
+        <span
+          className="font-serif text-2xl sm:text-3xl md:text-4xl text-foreground"
+          style={{ fontWeight: 600 }}
+        >
           {String(value).padStart(2, "0")}
         </span>
       </div>
-      <span className="mt-2 text-[10px] sm:text-xs tracking-widest uppercase font-sans text-muted-foreground">
+      <span
+        className="mt-2 text-[10px] sm:text-xs tracking-widest uppercase text-muted-foreground"
+        style={{ fontFamily: "'Cinzel', serif", letterSpacing: "0.18em" }}
+      >
         {label}
       </span>
+    </div>
+  );
+}
+
+// ─── Story Timeline ──────────────────────────────────────────────────────────
+
+const storyEvents = [
+  {
+    date: "06/10/2025",
+    title: "First Meeting",
+    description:
+      "We met for the very first time — a marriage proposal that felt like destiny.",
+    icon: "✦",
+    highlight: false,
+  },
+  {
+    date: "21/10/2025",
+    title: "Second Meeting",
+    description: "We met again to confirm what our hearts already knew.",
+    icon: "✦",
+    highlight: false,
+  },
+  {
+    date: "23/11/2025",
+    title: "We Got Engaged",
+    description: "We said yes to forever, surrounded by love and blessings.",
+    icon: "♥",
+    highlight: false,
+  },
+  {
+    date: "27/11/2025",
+    title: "Our First Date",
+    description:
+      "Our first outing together — a beautiful memory we'll always cherish.",
+    icon: "✦",
+    highlight: false,
+  },
+  {
+    date: "03/04/2026",
+    title: "Our Wedding Day",
+    description: "The most beautiful chapter begins.",
+    icon: "♥",
+    highlight: true,
+  },
+];
+
+function StoryTimeline() {
+  return (
+    <div className="relative max-w-2xl mx-auto px-4">
+      {/* Vertical line */}
+      <div
+        className="absolute left-6 sm:left-1/2 top-0 bottom-0 w-px"
+        style={{
+          background: "oklch(0.833 0.016 70)",
+          transform: "translateX(-50%)",
+        }}
+      />
+
+      <div className="space-y-8 sm:space-y-10">
+        {storyEvents.map((event, i) => (
+          <motion.div
+            key={event.date}
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-60px" }}
+            transition={{ duration: 0.6, delay: i * 0.1 }}
+            className={`relative flex items-start gap-4 sm:gap-0 ${
+              i % 2 === 0 ? "sm:flex-row" : "sm:flex-row-reverse"
+            }`}
+          >
+            {/* Left spacer on desktop */}
+            <div className="hidden sm:block sm:w-1/2" />
+
+            {/* Dot on timeline */}
+            <div
+              className="absolute left-6 sm:left-1/2 top-4 w-4 h-4 rounded-full border-2 flex items-center justify-center z-10"
+              style={{
+                transform: "translate(-50%, -50%) translateY(50%)",
+                background: event.highlight
+                  ? "oklch(0.72 0.065 20)"
+                  : "oklch(0.963 0.014 86)",
+                borderColor: event.highlight
+                  ? "oklch(0.72 0.065 20)"
+                  : "oklch(0.833 0.016 70)",
+                width: event.highlight ? "18px" : "14px",
+                height: event.highlight ? "18px" : "14px",
+              }}
+            />
+
+            {/* Card */}
+            <div
+              className={`ml-12 sm:ml-0 sm:w-1/2 ${
+                i % 2 === 0 ? "sm:pl-8" : "sm:pr-8"
+              }`}
+            >
+              <div
+                className="rounded-sm p-4 sm:p-5"
+                style={{
+                  background: event.highlight
+                    ? "oklch(0.96 0.03 20 / 0.25)"
+                    : "oklch(0.972 0.008 84 / 0.7)",
+                  border: event.highlight
+                    ? "1px solid oklch(0.72 0.065 20 / 0.4)"
+                    : "1px solid oklch(0.833 0.016 70 / 0.6)",
+                  boxShadow: event.highlight
+                    ? "0 2px 12px oklch(0.72 0.065 20 / 0.12)"
+                    : "0 1px 4px oklch(0.22 0 0 / 0.04)",
+                }}
+              >
+                <p
+                  className="text-xs tracking-widest uppercase mb-1"
+                  style={{
+                    fontFamily: "'Cinzel', serif",
+                    color: "oklch(0.72 0.065 20)",
+                    letterSpacing: "0.15em",
+                  }}
+                >
+                  {event.date}
+                </p>
+                <h4
+                  className="font-serif mb-1.5"
+                  style={{
+                    fontSize: "1.1rem",
+                    fontWeight: event.highlight ? 700 : 600,
+                    color: event.highlight
+                      ? "oklch(0.62 0.065 20)"
+                      : "oklch(0.22 0 0)",
+                  }}
+                >
+                  <span
+                    className="mr-2"
+                    style={{ color: "oklch(0.72 0.065 20)" }}
+                  >
+                    {event.icon}
+                  </span>
+                  {event.title}
+                </h4>
+                <p
+                  className="leading-relaxed"
+                  style={{
+                    fontFamily: "'Cormorant Garamond', serif",
+                    fontSize: "1rem",
+                    color: "oklch(0.46 0.025 55)",
+                    fontStyle: "italic",
+                  }}
+                >
+                  {event.description}
+                </p>
+              </div>
+            </div>
+          </motion.div>
+        ))}
+      </div>
     </div>
   );
 }
@@ -269,6 +428,7 @@ export default function App() {
   const [activeSection, setActiveSection] = useState("home");
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const heroRef = useRef<HTMLElement>(null);
+  const storyRef = useRef<HTMLElement>(null);
   const detailsRef = useRef<HTMLElement>(null);
 
   const scrollTo = (
@@ -282,6 +442,7 @@ export default function App() {
 
   const navItems = [
     { label: "HOME", section: "home", ref: heroRef },
+    { label: "OUR STORY", section: "story", ref: storyRef },
     { label: "DETAILS", section: "details", ref: detailsRef },
   ] as const;
 
@@ -300,7 +461,7 @@ export default function App() {
         {/* ── Navigation ── */}
         <header
           className="sticky top-0 z-50 border-b border-border"
-          style={{ background: "oklch(0.972 0.008 84)" }}
+          style={{ background: "oklch(0.972 0.008 84 / 0.97)" }}
         >
           {/* Desktop nav */}
           <nav className="hidden sm:flex items-center justify-center gap-8 py-4 px-6">
@@ -311,11 +472,12 @@ export default function App() {
                 onClick={() =>
                   scrollTo(ref as React.RefObject<HTMLElement>, section)
                 }
-                className={`font-sans text-xs tracking-[0.2em] uppercase transition-colors ${
+                className={`text-xs tracking-[0.2em] uppercase transition-colors ${
                   activeSection === section
                     ? "text-primary border-b border-primary pb-0.5"
                     : "text-muted-foreground hover:text-foreground"
                 }`}
+                style={{ fontFamily: "'Cinzel', serif" }}
                 data-ocid={`nav.${section}.link` as string}
               >
                 {label}
@@ -364,11 +526,12 @@ export default function App() {
                       onClick={() =>
                         scrollTo(ref as React.RefObject<HTMLElement>, section)
                       }
-                      className={`w-full text-center py-2.5 font-sans text-xs tracking-[0.2em] uppercase transition-colors ${
+                      className={`w-full text-center py-2.5 text-xs tracking-[0.2em] uppercase transition-colors ${
                         activeSection === section
                           ? "text-primary"
                           : "text-muted-foreground"
                       }`}
+                      style={{ fontFamily: "'Cinzel', serif" }}
                       data-ocid={`nav.mobile.${section}.link` as string}
                     >
                       {label}
@@ -385,30 +548,20 @@ export default function App() {
           ref={heroRef}
           id="home"
           className="relative overflow-hidden"
-          style={{
-            background:
-              "linear-gradient(160deg, oklch(0.963 0.014 86) 0%, oklch(0.93 0.03 15) 50%, oklch(0.963 0.014 86) 100%)",
-            minHeight: "480px",
-          }}
+          style={{ minHeight: "520px" }}
         >
-          {/* Floral banner top */}
-          <div className="absolute inset-x-0 top-0 h-32 sm:h-40 opacity-60 pointer-events-none">
-            <img
-              src="/assets/generated/wedding-floral-banner.dim_1200x400.png"
-              alt=""
-              aria-hidden="true"
-              className="w-full h-full object-cover object-bottom"
-            />
-          </div>
-          {/* Floral banner bottom */}
-          <div className="absolute inset-x-0 bottom-0 h-32 sm:h-40 opacity-60 pointer-events-none rotate-180">
-            <img
-              src="/assets/generated/wedding-floral-banner.dim_1200x400.png"
-              alt=""
-              aria-hidden="true"
-              className="w-full h-full object-cover object-bottom"
-            />
-          </div>
+          {/* Background image */}
+          <img
+            src="/assets/generated/wedding-bg-elegant.dim_1400x900.jpg"
+            alt=""
+            aria-hidden="true"
+            className="absolute inset-0 w-full h-full object-cover pointer-events-none"
+          />
+          {/* Subtle overlay */}
+          <div
+            className="absolute inset-0 pointer-events-none"
+            style={{ background: "oklch(0.97 0.01 84 / 0.55)" }}
+          />
 
           {/* Corner flourishes */}
           <FloralCornerTL className="opacity-80" />
@@ -473,7 +626,7 @@ export default function App() {
           </svg>
 
           {/* Hero content */}
-          <div className="relative z-10 flex flex-col items-center justify-center text-center px-4 sm:px-8 py-20 sm:py-24">
+          <div className="relative z-10 flex flex-col items-center justify-center text-center px-4 sm:px-8 py-20 sm:py-28">
             <motion.p
               initial={{ opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
@@ -481,7 +634,7 @@ export default function App() {
               className="font-script mb-4"
               style={{
                 fontSize: "clamp(1.2rem, 4vw, 1.6rem)",
-                color: "oklch(0.72 0.065 20)",
+                color: "oklch(0.62 0.065 20)",
               }}
             >
               Together with their families
@@ -497,17 +650,13 @@ export default function App() {
                 <div
                   className="font-serif font-bold text-foreground"
                   style={{
-                    fontSize: "clamp(1.8rem, 7vw, 3.8rem)",
+                    fontSize: "clamp(2rem, 8vw, 4.2rem)",
                     lineHeight: 1.1,
+                    fontWeight: 700,
+                    letterSpacing: "0.04em",
                   }}
                 >
                   Abhinav
-                </div>
-                <div
-                  className="font-script mt-1 text-muted-foreground hidden sm:block"
-                  style={{ fontSize: "1.1rem" }}
-                >
-                  of the family
                 </div>
               </div>
               <div className="flex flex-col items-center shrink-0">
@@ -525,17 +674,13 @@ export default function App() {
                 <div
                   className="font-serif font-bold text-foreground"
                   style={{
-                    fontSize: "clamp(1.8rem, 7vw, 3.8rem)",
+                    fontSize: "clamp(2rem, 8vw, 4.2rem)",
                     lineHeight: 1.1,
+                    fontWeight: 700,
+                    letterSpacing: "0.04em",
                   }}
                 >
                   Aakarsha
-                </div>
-                <div
-                  className="font-script mt-1 text-muted-foreground hidden sm:block"
-                  style={{ fontSize: "1.1rem" }}
-                >
-                  of the family
                 </div>
               </div>
             </motion.div>
@@ -547,7 +692,10 @@ export default function App() {
               className="flex items-center gap-3 mb-3"
             >
               <div className="h-px w-8 sm:w-12 bg-border" />
-              <p className="font-sans text-[10px] sm:text-xs tracking-[0.2em] sm:tracking-[0.25em] uppercase text-muted-foreground">
+              <p
+                className="text-[10px] sm:text-xs tracking-[0.2em] sm:tracking-[0.25em] uppercase text-muted-foreground"
+                style={{ fontFamily: "'Cinzel', serif" }}
+              >
                 are getting married
               </p>
               <div className="h-px w-8 sm:w-12 bg-border" />
@@ -559,8 +707,6 @@ export default function App() {
               transition={{ duration: 0.8, delay: 0.65 }}
               className="font-serif text-lg sm:text-xl md:text-2xl text-foreground mb-8"
             >
-              Friday, the Third of April
-              <br />
               <span
                 className="font-script"
                 style={{
@@ -568,7 +714,7 @@ export default function App() {
                   color: "oklch(0.72 0.065 20)",
                 }}
               >
-                Two Thousand &amp; Twenty Six
+                03 / 04 / 2026
               </span>
             </motion.p>
 
@@ -577,12 +723,15 @@ export default function App() {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 0.8, delay: 0.9 }}
-              onClick={() => scrollTo(detailsRef, "details")}
+              onClick={() => scrollTo(storyRef, "story")}
               className="flex flex-col items-center gap-1 text-muted-foreground hover:text-primary transition-colors"
               data-ocid="hero.primary_button"
             >
-              <span className="font-sans text-xs tracking-widest uppercase">
-                See Details
+              <span
+                className="text-xs tracking-widest uppercase"
+                style={{ fontFamily: "'Cinzel', serif" }}
+              >
+                Our Story
               </span>
               <ChevronDown className="w-4 h-4 animate-bounce" />
             </motion.button>
@@ -621,6 +770,41 @@ export default function App() {
               <CountdownUnit value={timeLeft.seconds} label="Seconds" />
             </div>
           </motion.div>
+        </section>
+
+        {/* ── Our Story ── */}
+        <section
+          ref={storyRef}
+          id="story"
+          className="relative overflow-hidden py-14 sm:py-20 border-b border-border"
+          style={{ background: "oklch(0.963 0.014 86)" }}
+        >
+          <FloralCornerTL className="opacity-20" />
+          <FloralCornerBR className="opacity-20" />
+
+          <motion.div
+            initial={{ opacity: 0, y: 24 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.7 }}
+            className="text-center mb-10 sm:mb-14 px-4"
+          >
+            <p
+              className="font-script mb-1"
+              style={{
+                fontSize: "clamp(1.2rem, 4vw, 1.6rem)",
+                color: "oklch(0.72 0.065 20)",
+              }}
+            >
+              A love written in the stars
+            </p>
+            <h2 className="font-serif text-2xl md:text-3xl text-foreground">
+              Our Story
+            </h2>
+            <FloralDivider />
+          </motion.div>
+
+          <StoryTimeline />
         </section>
 
         {/* ── Event Details ── */}
@@ -672,7 +856,10 @@ export default function App() {
                   style={{ color: "oklch(0.72 0.065 20)" }}
                 />
               </div>
-              <h3 className="font-serif text-xl text-foreground mb-1 font-semibold">
+              <h3
+                className="font-serif text-xl text-foreground mb-1"
+                style={{ fontWeight: 600 }}
+              >
                 Wedding Ceremony
               </h3>
               <p
@@ -681,20 +868,34 @@ export default function App() {
               >
                 Auspicious Moments
               </p>
-              <div className="space-y-3 text-sm font-sans">
+              <div className="space-y-3 text-sm">
                 <div className="flex items-start justify-center gap-2 text-muted-foreground">
                   <Calendar
                     className="w-4 h-4 mt-0.5 shrink-0"
                     style={{ color: "oklch(0.72 0.065 20)" }}
                   />
-                  <span>Friday, April 3, 2026</span>
+                  <span
+                    style={{
+                      fontFamily: "'Cormorant Garamond', serif",
+                      fontSize: "1rem",
+                    }}
+                  >
+                    03/04/2026
+                  </span>
                 </div>
                 <div className="flex items-start justify-center gap-2 text-muted-foreground">
                   <Clock
                     className="w-4 h-4 mt-0.5 shrink-0"
                     style={{ color: "oklch(0.72 0.065 20)" }}
                   />
-                  <span>Time: TBD</span>
+                  <span
+                    style={{
+                      fontFamily: "'Cormorant Garamond', serif",
+                      fontSize: "1rem",
+                    }}
+                  >
+                    8:43 P.M.
+                  </span>
                 </div>
                 <div className="flex items-start justify-center gap-2 text-muted-foreground">
                   <MapPin
@@ -702,12 +903,50 @@ export default function App() {
                     style={{ color: "oklch(0.72 0.065 20)" }}
                   />
                   <div className="text-left">
-                    <p className="text-foreground font-medium">
+                    <p
+                      className="text-foreground"
+                      style={{
+                        fontFamily: "'Cormorant Garamond', serif",
+                        fontSize: "1rem",
+                        fontWeight: 600,
+                      }}
+                    >
                       Shri Gujarati Pragati Samaj
                     </p>
-                    <p>Kalyana Mandapam</p>
-                    <p>Kacheguda, Hyderabad</p>
+                    <p
+                      style={{
+                        fontFamily: "'Cormorant Garamond', serif",
+                        fontSize: "1rem",
+                      }}
+                    >
+                      Kalyana Mandapam
+                    </p>
+                    <p
+                      style={{
+                        fontFamily: "'Cormorant Garamond', serif",
+                        fontSize: "1rem",
+                      }}
+                    >
+                      Kacheguda, Hyderabad
+                    </p>
                   </div>
+                </div>
+                <div className="flex justify-center pt-1">
+                  <a
+                    href="https://maps.app.goo.gl/k8N7eadohsvJ6k9XA?g_st=ac"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-1.5 text-[11px] tracking-widest uppercase transition-opacity hover:opacity-70"
+                    style={{
+                      fontFamily: "'Cinzel', serif",
+                      color: "oklch(0.72 0.065 20)",
+                      letterSpacing: "0.15em",
+                    }}
+                    data-ocid="ceremony.directions.link"
+                  >
+                    <MapPin className="w-3 h-3" />
+                    Get Directions
+                  </a>
                 </div>
               </div>
             </motion.div>
@@ -736,7 +975,10 @@ export default function App() {
                   <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" />
                 </svg>
               </div>
-              <h3 className="font-serif text-xl text-foreground mb-1 font-semibold">
+              <h3
+                className="font-serif text-xl text-foreground mb-1"
+                style={{ fontWeight: 600 }}
+              >
                 Wedding Reception
               </h3>
               <p
@@ -745,20 +987,34 @@ export default function App() {
               >
                 An Evening to Remember
               </p>
-              <div className="space-y-3 text-sm font-sans">
+              <div className="space-y-3 text-sm">
                 <div className="flex items-start justify-center gap-2 text-muted-foreground">
                   <Calendar
                     className="w-4 h-4 mt-0.5 shrink-0"
                     style={{ color: "oklch(0.72 0.065 20)" }}
                   />
-                  <span>Sunday, April 5, 2026</span>
+                  <span
+                    style={{
+                      fontFamily: "'Cormorant Garamond', serif",
+                      fontSize: "1rem",
+                    }}
+                  >
+                    05/04/2026
+                  </span>
                 </div>
                 <div className="flex items-start justify-center gap-2 text-muted-foreground">
                   <Clock
                     className="w-4 h-4 mt-0.5 shrink-0"
                     style={{ color: "oklch(0.72 0.065 20)" }}
                   />
-                  <span>Time: TBD</span>
+                  <span
+                    style={{
+                      fontFamily: "'Cormorant Garamond', serif",
+                      fontSize: "1rem",
+                    }}
+                  >
+                    7:00 P.M. Onwards
+                  </span>
                 </div>
                 <div className="flex items-start justify-center gap-2 text-muted-foreground">
                   <MapPin
@@ -766,29 +1022,54 @@ export default function App() {
                     style={{ color: "oklch(0.72 0.065 20)" }}
                   />
                   <div className="text-left">
-                    <p className="text-foreground font-medium">
+                    <p
+                      className="text-foreground"
+                      style={{
+                        fontFamily: "'Cormorant Garamond', serif",
+                        fontSize: "1rem",
+                        fontWeight: 600,
+                      }}
+                    >
                       Hotel Murali Fortune
                     </p>
-                    <p>Bandar Road</p>
-                    <p>Vijayawada, Andhra Pradesh</p>
+                    <p
+                      style={{
+                        fontFamily: "'Cormorant Garamond', serif",
+                        fontSize: "1rem",
+                      }}
+                    >
+                      Bandar Road
+                    </p>
+                    <p
+                      style={{
+                        fontFamily: "'Cormorant Garamond', serif",
+                        fontSize: "1rem",
+                      }}
+                    >
+                      Vijayawada, Andhra Pradesh
+                    </p>
                   </div>
+                </div>
+                <div className="flex justify-center pt-1">
+                  <a
+                    href="https://maps.app.goo.gl/rihvmpZNBhpMakXc9?g_st=ac"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-1.5 text-[11px] tracking-widest uppercase transition-opacity hover:opacity-70"
+                    style={{
+                      fontFamily: "'Cinzel', serif",
+                      color: "oklch(0.72 0.065 20)",
+                      letterSpacing: "0.15em",
+                    }}
+                    data-ocid="reception.directions.link"
+                  >
+                    <MapPin className="w-3 h-3" />
+                    Get Directions
+                  </a>
                 </div>
               </div>
             </motion.div>
           </div>
-        </section>
-
-        {/* ── Floral accent strip ── */}
-        <section
-          className="border-t border-b border-border overflow-hidden"
-          aria-hidden="true"
-        >
-          <img
-            src="/assets/generated/wedding-floral-banner.dim_1200x400.png"
-            alt=""
-            aria-hidden="true"
-            className="w-full h-24 sm:h-32 object-cover opacity-70"
-          />
         </section>
 
         {/* ── Footer ── */}
@@ -809,30 +1090,42 @@ export default function App() {
               Abhinav &amp; Aakarsha
             </p>
             <p
-              className="font-sans text-xs tracking-[0.2em] uppercase mb-4"
-              style={{ color: "oklch(0.972 0.008 84 / 0.8)" }}
+              className="text-xs tracking-[0.2em] uppercase mb-4"
+              style={{
+                fontFamily: "'Cinzel', serif",
+                color: "oklch(0.972 0.008 84 / 0.8)",
+              }}
             >
-              April 3, 2026 &nbsp;·&nbsp; Kacheguda, Hyderabad
+              03/04/2026 &nbsp;·&nbsp; Kacheguda, Hyderabad
             </p>
             <div
               className="h-px w-24 mx-auto mb-4"
               style={{ background: "oklch(0.972 0.008 84 / 0.4)" }}
             />
             <p
-              className="font-sans text-xs mb-1"
-              style={{ color: "oklch(0.972 0.008 84 / 0.7)" }}
+              className="text-xs mb-1"
+              style={{
+                fontFamily: "'Cormorant Garamond', serif",
+                color: "oklch(0.972 0.008 84 / 0.7)",
+              }}
             >
               Shri Gujarati Pragati Samaj Kalyana Mandapam, Kacheguda
             </p>
             <p
-              className="font-sans text-xs mb-6"
-              style={{ color: "oklch(0.972 0.008 84 / 0.7)" }}
+              className="text-xs mb-6"
+              style={{
+                fontFamily: "'Cormorant Garamond', serif",
+                color: "oklch(0.972 0.008 84 / 0.7)",
+              }}
             >
               Hotel Murali Fortune, Bandar Road, Vijayawada
             </p>
             <p
-              className="font-sans text-xs"
-              style={{ color: "oklch(0.972 0.008 84 / 0.6)" }}
+              className="text-xs"
+              style={{
+                fontFamily: "'Cormorant Garamond', serif",
+                color: "oklch(0.972 0.008 84 / 0.6)",
+              }}
             >
               © {new Date().getFullYear()}. Built with{" "}
               <Heart className="inline w-3 h-3 fill-current" /> using{" "}
