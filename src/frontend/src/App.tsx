@@ -446,6 +446,14 @@ export default function App() {
     { label: "DETAILS", section: "details", ref: detailsRef },
   ] as const;
 
+  const parentageStyle = {
+    fontFamily: "'Cormorant Garamond', serif",
+    fontStyle: "italic" as const,
+    fontSize: "clamp(0.7rem, 2vw, 0.85rem)",
+    color: "oklch(0.62 0.065 20)",
+    lineHeight: 1.4,
+  };
+
   return (
     <div
       className="min-h-screen w-full overflow-x-hidden"
@@ -644,13 +652,14 @@ export default function App() {
               initial={{ opacity: 0, y: 24 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.9, delay: 0.25 }}
-              className="flex items-center gap-3 sm:gap-5 mb-6"
+              className="flex flex-col xs:flex-row items-center gap-3 sm:gap-5 mb-6 w-full max-w-lg"
             >
-              <div className="text-right">
+              {/* Abhinav */}
+              <div className="flex-1 flex flex-col items-center xs:items-end text-center xs:text-right min-w-0">
                 <div
                   className="font-serif font-bold text-foreground"
                   style={{
-                    fontSize: "clamp(2rem, 8vw, 4.2rem)",
+                    fontSize: "clamp(1.6rem, 7vw, 4.2rem)",
                     lineHeight: 1.1,
                     fontWeight: 700,
                     letterSpacing: "0.04em",
@@ -658,7 +667,14 @@ export default function App() {
                 >
                   Abhinav
                 </div>
+                <p style={parentageStyle} className="mt-1 px-1 break-words">
+                  S/o Sri. Pulipaka Murali Mohan
+                  <br />
+                  &amp; Smt. Lavanya (late)
+                </p>
               </div>
+
+              {/* & */}
               <div className="flex flex-col items-center shrink-0">
                 <span
                   className="font-script"
@@ -670,11 +686,13 @@ export default function App() {
                   &amp;
                 </span>
               </div>
-              <div className="text-left">
+
+              {/* Aakarsha */}
+              <div className="flex-1 flex flex-col items-center xs:items-start text-center xs:text-left min-w-0">
                 <div
                   className="font-serif font-bold text-foreground"
                   style={{
-                    fontSize: "clamp(2rem, 8vw, 4.2rem)",
+                    fontSize: "clamp(1.6rem, 7vw, 4.2rem)",
                     lineHeight: 1.1,
                     fontWeight: 700,
                     letterSpacing: "0.04em",
@@ -682,6 +700,11 @@ export default function App() {
                 >
                   Aakarsha
                 </div>
+                <p style={parentageStyle} className="mt-1 px-1 break-words">
+                  D/o Sri. Pochiraju Samba Siva Nagendra Rao
+                  <br />
+                  &amp; Smt. Bhaskara Ramalakshmi
+                </p>
               </div>
             </motion.div>
 
@@ -1096,30 +1119,12 @@ export default function App() {
                 color: "oklch(0.972 0.008 84 / 0.8)",
               }}
             >
-              03/04/2026 &nbsp;·&nbsp; Kacheguda, Hyderabad
+              03 / 04 / 2026
             </p>
             <div
-              className="h-px w-24 mx-auto mb-4"
+              className="h-px w-24 mx-auto mb-6"
               style={{ background: "oklch(0.972 0.008 84 / 0.4)" }}
             />
-            <p
-              className="text-xs mb-1"
-              style={{
-                fontFamily: "'Cormorant Garamond', serif",
-                color: "oklch(0.972 0.008 84 / 0.7)",
-              }}
-            >
-              Shri Gujarati Pragati Samaj Kalyana Mandapam, Kacheguda
-            </p>
-            <p
-              className="text-xs mb-6"
-              style={{
-                fontFamily: "'Cormorant Garamond', serif",
-                color: "oklch(0.972 0.008 84 / 0.7)",
-              }}
-            >
-              Hotel Murali Fortune, Bandar Road, Vijayawada
-            </p>
             <p
               className="text-xs"
               style={{
